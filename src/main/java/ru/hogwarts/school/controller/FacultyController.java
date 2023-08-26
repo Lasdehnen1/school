@@ -29,7 +29,7 @@ public class FacultyController {
     }
     @PostMapping
     public Faculty addFaculty(@RequestBody Faculty faculty) {
-        return facultyService.addFaculty(faculty);
+        return facultyService.addFaculty(faculty.getName(), faculty.getColor());
     }
     @PutMapping
     public ResponseEntity<Faculty> editFaculty(@RequestBody Faculty faculty) {

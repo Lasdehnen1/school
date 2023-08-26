@@ -15,10 +15,10 @@ public class FacultyService {
     private final Map<Long, Faculty> faculties = new HashMap<>();
     private Long nextId = 0L;
 
-    public Faculty addFaculty(Faculty faculty) {
-        faculty.setId(++nextId);
-        faculties.put(faculty.getId(), faculty);
-        return faculty;
+    public Faculty addFaculty(String name, String color) {
+        Faculty newFaculty = new Faculty(++nextId, name, color);
+        faculties.put(newFaculty.getId(), newFaculty);
+        return newFaculty;
     }
 
     public Faculty getFacultyById(Long id) {

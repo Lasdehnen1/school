@@ -14,10 +14,10 @@ public class StudentService {
     private final Map<Long, Student> students = new HashMap<>();
     private Long nextId = 0L;
 
-    public Student addStudent(Student student) {
-        student.setId(++nextId);
-        students.put(student.getId(), student);
-        return student;
+    public Student addStudent(String name, int age) {
+        Student newStudent = new Student(++nextId, name, age);
+        students.put(newStudent.getId(), newStudent);
+        return newStudent;
     }
 
     public Student getStudentById(Long id) {
