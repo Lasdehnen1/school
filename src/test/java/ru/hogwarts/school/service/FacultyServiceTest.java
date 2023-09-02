@@ -1,15 +1,5 @@
 package ru.hogwarts.school.service;
 
-import org.junit.jupiter.api.Test;
-import ru.hogwarts.school.model.Faculty;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static ru.hogwarts.school.constants.Constants.*;
-
 class FacultyServiceTest {
 /*
     FacultyService facultyService = new FacultyService();
