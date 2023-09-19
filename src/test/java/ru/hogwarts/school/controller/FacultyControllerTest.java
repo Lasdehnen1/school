@@ -1,5 +1,6 @@
 package ru.hogwarts.school.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import net.minidev.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -56,6 +57,7 @@ class FacultyControllerTest {
 
     @InjectMocks
     private FacultyController facultyController;
+
 
 
     @Test
@@ -131,6 +133,11 @@ class FacultyControllerTest {
                         .delete("/faculty" + "/" + TEST_FACULTY_1.getId())
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
+
+
+
+
+
     }
 
     @Test
@@ -161,7 +168,10 @@ class FacultyControllerTest {
                         .get("/faculty/color?color=" + TEST_FACULTY_1.getColor())
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].color").value(TEST_FACULTY_1.getColor()));
+                .andExpect(jsonPath("$[0].color").value(TEST_FACULTY_1.getColor()))
+                .andExpect(jsonPath("$[0].id").value(TEST_FACULTY_1.getId()))
+                .andExpect(jsonPath("$[0].name").value(TEST_FACULTY_1.getName()))
+                .andExpect(jsonPath("$.size()").value(TEST_FACULTY_COLLECTION.size()));
 
 
     }
@@ -177,14 +187,20 @@ class FacultyControllerTest {
                         .get("/faculty/find?param=" + TEST_FACULTY_1.getColor())
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].color").value(TEST_FACULTY_1.getColor()));
+                .andExpect(jsonPath("$[0].color").value(TEST_FACULTY_1.getColor()))
+                .andExpect(jsonPath("$[0].id").value(TEST_FACULTY_1.getId()))
+                .andExpect(jsonPath("$[0].name").value(TEST_FACULTY_1.getName()))
+                .andExpect(jsonPath("$.size()").value(TEST_FACULTY_COLLECTION.size()));
 
 
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/faculty/find?param=" + TEST_FACULTY_1.getName())
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].name").value(TEST_FACULTY_1.getName()));
+                .andExpect(jsonPath("$[0].color").value(TEST_FACULTY_1.getColor()))
+                .andExpect(jsonPath("$[0].id").value(TEST_FACULTY_1.getId()))
+                .andExpect(jsonPath("$[0].name").value(TEST_FACULTY_1.getName()))
+                .andExpect(jsonPath("$.size()").value(TEST_FACULTY_COLLECTION.size()));
     }
 
 }
