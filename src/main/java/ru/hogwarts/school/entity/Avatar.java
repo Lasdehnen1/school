@@ -25,14 +25,6 @@ public class Avatar {
     public Avatar() {
     }
 
-    public Avatar(Long id, String filePath, long fileSize, String mediaType, Student student) {
-        this.id = id;
-        this.filePath = filePath;
-        this.fileSize = fileSize;
-        this.mediaType = mediaType;
-        this.student = student;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

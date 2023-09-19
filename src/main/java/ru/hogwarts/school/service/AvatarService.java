@@ -7,8 +7,8 @@ import ru.hogwarts.school.entity.Avatar;
 import ru.hogwarts.school.entity.Student;
 import ru.hogwarts.school.repository.AvatarRepository;
 
+
 import javax.imageio.ImageIO;
-import javax.transaction.Transactional;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -18,18 +18,20 @@ import java.nio.file.Path;
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
 @Service
-@Transactional
 public class AvatarService {
-    @Value("${path.to.avatars.folder}")
-    private String avatarsDir;
-    private final AvatarRepository avatarRepository;
+    private final String avatarsDir;
     private final StudentService studentService;
+    private final AvatarRepository avatarRepository;
 
-    public AvatarService(AvatarRepository avatarRepository, StudentService studentService) {
-        this.avatarRepository = avatarRepository;
+    public AvatarService(
+            @Value("${path.to.avatars.folder}") String avatarsDir,
+            StudentService studentService,
+            AvatarRepository avatarRepository
+    ) {
+        this.avatarsDir = avatarsDir;
         this.studentService = studentService;
+        this.avatarRepository = avatarRepository;
     }
-
     public void uploadAvatar(Long studentId, MultipartFile avatarFile) throws IOException {
         Student student = studentService.getStudentById(studentId);
 
@@ -44,7 +46,8 @@ public class AvatarService {
         ) {
             bis.transferTo(bos);
         }
-        Avatar avatar = getAvatar(studentId);
+       // Avatar avatar = getAvatar(studentId);
+        Avatar avatar = new Avatar();
         avatar.setStudent(student);
         avatar.setFilePath(filePath.toString());
         avatar.setFileSize(avatarFile.getSize());
@@ -52,6 +55,7 @@ public class AvatarService {
         avatar.setData(avatarFile.getBytes());
         avatarRepository.save(avatar);
         avatar.setData(generateImagePreview(filePath));
+
     }
     private String getExtensions(String fileName) {
         return fileName.substring(fileName.lastIndexOf(".") + 1);
