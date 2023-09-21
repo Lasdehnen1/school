@@ -52,6 +52,18 @@ public class StudentService {
         return studentRepository.findByFacultyId(facultyId);
     }
 
+    public Integer studentQuantity() {
+        return studentRepository.allStudentsQuantity();
+    }
+
+    public double averageAge() {
+        return studentRepository.averageAge();
+    }
+
+    public List<Student> lastFive() {
+        return studentRepository.lastFive();
+    }
+
 
 
 
