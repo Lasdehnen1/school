@@ -69,9 +69,14 @@ public class AvatarController {
         return ResponseEntity.ok().headers(headers).body(avatar.getData());
     }
 
-    @GetMapping("/by-pages")
-    public List<Avatar> getAvatarList(@RequestParam("page") int pageNumber, @RequestParam("size") int pageSize) {
-        return avatarService.getAvatarList(pageNumber, pageSize);
+    @GetMapping
+    public ResponseEntity<List <Avatar>> getAvatarList(@RequestParam("page") int pageNumber, @RequestParam("size") int pageSize) {
+        if (pageNumber >= 1) {
+            return ResponseEntity.ok(avatarService.getAvatarList(pageNumber, pageSize));
+        }
+
+        return ResponseEntity.badRequest().build();
+
     }
 
 }
