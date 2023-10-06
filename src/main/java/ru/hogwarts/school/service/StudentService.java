@@ -25,6 +25,8 @@ public class StudentService {
 
     Logger logger = LoggerFactory.getLogger(StudentService.class);
 
+    Object object = new Object();
+
     public Student addStudent(Student student) {
         logger.info("Was invoked method for creating student");
         return studentRepository.save(student);
@@ -99,6 +101,44 @@ public class StudentService {
                 .average().getAsDouble();
         return avgAge;
 
+    }
+
+    public void printStudentsNames() {
+        List<String> names = studentRepository.findAll().stream()
+                .map(Student::getName)
+                .collect(Collectors.toList());
+        System.out.println(names.get(0));
+        System.out.println(names.get(1));
+        new Thread(() -> {
+            System.out.println(names.get(2));
+            System.out.println(names.get(3));
+        }).start();
+        new Thread(() -> {
+            System.out.println(names.get(4));
+            System.out.println(names.get(5));
+        }).start();
+    }
+
+    public void printStudentNamesSynchronized() {
+        List<String> names = studentRepository.findAll().stream()
+                .map(Student::getName)
+                .collect(Collectors.toList());
+        synchro(names.get(0));
+        synchro(names.get(1));
+        new Thread(() -> {
+            synchro(names.get(2));
+            synchro(names.get(3));
+        }).start();
+        new Thread(() -> {
+            synchro(names.get(4));
+            synchro(names.get(5));
+        }).start();
+    }
+
+    private void synchro(String name) {
+        synchronized (object) {
+            System.out.println(name);
+        }
     }
 
 }
