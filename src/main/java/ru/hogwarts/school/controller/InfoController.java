@@ -18,4 +18,9 @@ public class InfoController {
     public Integer getServerPort() {
         return infoService.getServerPort();
     }
+
+    @GetMapping("/count")
+    public Integer count() {
+        return infoService.count();
+    }
 }

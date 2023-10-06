@@ -1,5 +1,6 @@
 package ru.hogwarts.school.service;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -8,8 +9,11 @@ import ru.hogwarts.school.entity.Student;
 import ru.hogwarts.school.repository.StudentRepository;
 
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Service
 public class StudentService {
@@ -78,6 +82,23 @@ public class StudentService {
     public List<Student> lastFive() {
         logger.info("Was invoked method for getting last five students");
         return studentRepository.lastFive();
+    }
+
+    public List<String> studentListSortedByA() {
+        List<String> list = studentRepository.findAll().stream()
+                .map(Student::getName)
+                .filter(name -> name.contains("A"))
+                .sorted()
+                .collect(Collectors.toList());
+        return list;
+    }
+
+    public Double avgStudentAge() {
+        Double avgAge = studentRepository.findAll().stream()
+                .mapToDouble(Student::getAge)
+                .average().getAsDouble();
+        return avgAge;
+
     }
 
 }
